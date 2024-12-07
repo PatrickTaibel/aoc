@@ -6,7 +6,8 @@ import scala.io.Source
 
 object day07:
   private val operationsPart1: Seq[(Long, Long) => Long] = Seq(_ + _, _ * _)
-  private val operationsPart2: Seq[(Long, Long) => Long] = operationsPart1 :+ ((left, right) => s"$left$right".toLong)
+  private val operationsPart2: Seq[(Long, Long) => Long] = operationsPart1 :+
+    ((left, right) => math.round(left * math.pow(10, math.log10(right).floor + 1) + right))
 
   @main
   def day07main(): Unit =
@@ -29,4 +30,5 @@ object day07:
       else if current > expected then false
       else
         operators.exists(op => inner(remaining.tail, op(current, remaining.head)))
+
     inner(operands)
